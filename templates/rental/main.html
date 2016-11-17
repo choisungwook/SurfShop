@@ -1,0 +1,57 @@
+{% extends 'shop/base.html' %}
+
+{% block content %}
+
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="jumbotron text-center other-color">
+                    <h1>렌탈</h1>
+                    <from method="POST" action="#">
+                        <select id="sido_name">
+                            {% for item in sido %}
+                            <option value="{{ item.name }}">{{ item.name }}</option>
+                            {{ item }}
+                            {% endfor %}
+                        </select>
+                        <select id="sigungu_name">
+                            <option value="">data</option>
+                        </select>
+                    </from>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $("select#sido_name").change(function(){
+            var sido_name = $(this).val();
+            //비동기로 시군구 요청
+            $.ajax({
+                type : "GET",
+                url : '/rental/searchSigungu/',
+                data : {'sido_name': sido_name},
+                dataType: 'json',
+                success:function(data){
+                    //모든 옵션 삭제
+                    $("select#sigungu_name").find("option").remove();
+
+                    var list = $.parseJSON(data);
+                    var listlen = list.length;
+                    for(var i=0; i<listlen; i++){
+                        name = list[i].name
+                        //옵션 추가
+                        $("select#sigungu_name").append("<option>" + name + "</option>");
+                    }
+                }
+            });
+        });
+    });
+
+    </script>
+{% endblock %}

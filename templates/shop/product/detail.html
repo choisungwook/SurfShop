@@ -1,0 +1,67 @@
+{% extends 'shop/base.html' %}
+
+{% load static %}
+
+{% block title %}
+{% endblock %}
+
+
+{% block content %}
+    <section>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-3">
+                    <!--왼쪽 사이드 메뉴-->
+					<div class="left-sidebar">
+						<h2>Category</h2>
+                        <!--카테고리 출력-->
+						<div class="panel-group category-products" id="accordian"><!--category-productsr-->
+                            <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title"><a href="{% url 'shop:product_list' %}">전체</a></h4>
+                                    </div>
+                            </div>
+                            {% for c in categories %}
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title"><a href="{{ c.get_absoulte_url }}">{{ c.name }}</a></h4>
+                                    </div>
+							    </div>
+                            {% endfor %}
+						</div><!--/category-productsr-->
+                        <!--카테고리 출력-->
+					</div>
+                    <!--왼쪽 사이드 메뉴-->
+				</div>
+
+
+                <div class="col-sm-7">
+                    <!--상품 상세사항-->
+                    <div class="product-information">
+                        <!--<img src="{% if product.image %}{{ product.image.url }}{% endif %}" class="newarrival" alt="" />-->
+                        <h2>{{ product.name }}</h2>
+                        <p>Web ID: 1089772</p>
+                        <img src="images/product-details/rating.png" alt="" />
+                        <span>
+                            <span>US $59</span>
+                            <label>Quantity:</label>
+                            <input type="text" value="3" />
+                            <button type="button" class="btn btn-fefault cart">
+                                <i class="fa fa-shopping-cart"></i>
+                                Add to cart
+                            </button>
+                        </span>
+                        <p><b>Availability:</b> In Stock</p>
+                        <p><b>Condition:</b> New</p>
+                        <p><b>Brand:</b> E-SHOPPER</p>
+
+                        <a href=""><img src="images/product-details/share.png" class="share img-responsive"  alt="" /></a>
+                        
+                    </div>
+                    <!--상품 상세사항-->
+                </div>
+
+			</div>
+		</div>
+	</section>
+{% endblock %}

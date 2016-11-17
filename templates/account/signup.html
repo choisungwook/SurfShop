@@ -1,0 +1,28 @@
+{% extends 'shop/base.html' %}
+
+{% block content %}
+
+
+    <section id="form">
+		<div class="container">
+			<div class="row">
+                <div class="col-sm-4"></div>
+				<div class="col-sm-4">
+                    <!--회원가입 폼 -->
+					<div class="login-form">
+						<h2>Login to your account</h2>
+						<form id="signup" action="." method="POST" >
+                            {{ form.as_p }}
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-default">회원가입</button>
+						</form>
+					</div>
+                    <!--회원가입 폼 -->
+				</div>
+                <div class="col-sm-4"></div>
+			</div>
+		</div>
+	</section>
+
+
+{% endblock %}
