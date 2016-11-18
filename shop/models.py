@@ -1,5 +1,8 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from address.models import Address
 
-# Create your models here.
+class Store(models.Model):
+    address = models.ForeignKey(Address, related_name='address')
+    name =  models.CharField(max_length=200, blank=True)
