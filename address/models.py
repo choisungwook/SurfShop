@@ -28,3 +28,6 @@ class Address(models.Model):
 
     class Meta:
         db_table = 'address'
+
+    def __unicode__(self):
+        return self.Sigungu.sido.name + ' ' + self.Sigungu.name

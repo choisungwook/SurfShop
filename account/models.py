@@ -87,3 +87,7 @@ class Customer(models.Model):
     class Meta:
         db_table = 'customer'
 
+
+    def __unicode__(self):
+        return self.user.username
+
