@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'account',
     'rental',
     'shop',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
