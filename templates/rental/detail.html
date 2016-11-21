@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% for t in inventory %}
+    {{ t.rentalproduct.name }}
+    {{ t.rentalproduct.price }}
+    <br/>
+{% endfor %}
+<!--<div class="content-section">-->
+    <!--<div class="container">-->
+        <!--<div class="row">-->
+            <!--<div class="col-md-3 col-sm-6">-->
+                <!--<div class="product-item-vote">-->
+                    <!--<div class="product-thumb">-->
+                        <!--<img src="images/products/1.jpg" alt="">-->
+                    <!--</div> &lt;!&ndash; /.product-thum &ndash;&gt;-->
+                    <!--<div class="product-content">-->
+                        <!--<h5><a href="#">Name of Shirt</a></h5>-->
+                        <!--<span class="tagline">By: JohnDoe</span>-->
+                        <!--<ul class="progess-bars">-->
+                            <!--<li>-->
+                                <!--<div class="progress">-->
+                                    <!--<div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%;"></div>-->
+                                    <!--<span>3<i class="fa fa-heart"></i></span>-->
+                                <!--</div>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<div class="progress">-->
+                                    <!--<div class="progress-bar comments" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>-->
+                                    <!--<span class="comments">3<i class="fa fa-heart"></i></span>-->
+                                <!--</div>-->
+                            <!--</li>-->
+                        <!--</ul>-->
+                    <!--</div> &lt;!&ndash; /.product-content &ndash;&gt;-->
+                <!--</div> &lt;!&ndash; /.product-item-vote &ndash;&gt;-->
+            <!--</div> &lt;!&ndash; /.col-md-3 &ndash;&gt;-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+{% endblock %}
