@@ -19,17 +19,6 @@
 -- Table structure for table `sigungu`
 --
 
-DROP TABLE IF EXISTS `sigungu`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `sigungu` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) NOT NULL,
-  `sido_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `sigungu_sido_id_8621e892_fk_sido_id` (`sido_id`),
-  CONSTRAINT `sigungu_sido_id_8621e892_fk_sido_id` FOREIGN KEY (`sido_id`) REFERENCES `sido` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=251 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="content-section">
+    <div class="container">
+        <div class="row">
+            {% for product in inventory %}
+                <div class="col-md-4 col-sm-6">
+                    <div class="product-item-vote">
+                        <div class="product-thumb">
+                            <img src="{% if product.rentalproduct.image %}{{ product.rentalproduct.image.url }}{% endif %}" alt="">
+                        </div> <!-- /.product-thum -->
+                        <div class="product-content">
+                            <h5><a href="#">{{ product.rentalproduct.name }}</a></h5>
+                            <h5><a href="#">{{ product.store.name }}</a></h5>
+                            <span class="tagline">{{ product.rentalproduct.price }}</span>
+                        </div> <!-- /.product-content -->
+                    </div> <!-- /.product-item-vote -->
+                </div> <!-- /.col-md-3 -->
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -12,6 +12,7 @@ class RentalCategory(models.Model):
     slug = models.SlugField(max_length=200, db_index=True, unique=True)
 
     class Meta:
+        db_table = 'RentalCategory'
         ordering = ('name',)
         verbose_name = 'category'
         verbose_name_plural = 'categories'
@@ -29,14 +30,15 @@ class RentalProduct(models.Model):
     description = models.TextField(blank=True)
     available = models.BooleanField(default=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    published = models.DateTimeField(blank=True, null=True)
-    last_update = models.DateTimeField(blank=True, null=True)
+    published = models.DateTimeField(blank=True, null=True, auto_now_add=True)
+    last_update = models.DateTimeField(blank=True, null=True, auto_now=True)
     image = models.ImageField(upload_to='%Y/%m/%d', blank=True)
     available = models.BooleanField(default=True)
     stock = models.PositiveIntegerField()
     slug = models.SlugField(max_length=200, db_index=True)
 
     class Meta:
+        db_table = 'RentalProduct'
         ordering = ('name',)
         index_together = (('id', 'slug'),)
 
@@ -53,6 +55,9 @@ class Rentalinventory(models.Model):
     store = models.ForeignKey(Store, related_name='store')
     rentalproduct = models.ForeignKey(RentalProduct, related_name='rentalproduct')
 
+    class Meta:
+        db_table = 'Rentalinventory'
+
 #예약 모델
 #상태코드 0 : 예약상태, 1, 확인됨, 2. 예약중
 class Reservation(models.Model):
@@ -62,6 +67,9 @@ class Reservation(models.Model):
     out_date = models.DateTimeField(blank=True, null=False)
     status = models.IntegerField(null=False)
     stock = models.PositiveIntegerField()
+
+    class Meta:
+        db_table = 'Reservation'
 
 
 
