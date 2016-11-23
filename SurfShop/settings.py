@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'rental',
     'shop',
     'django_extensions',
+    'sorl.thumbnail',
 ]
 
 MIDDLEWARE = [

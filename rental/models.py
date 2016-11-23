@@ -5,6 +5,7 @@ from django.db import models
 from django.core.urlresolvers import reverse
 from shop.models import Store
 from account.models import Customer
+from sorl.thumbnail import ImageField
 
 #렌탈 상품 카테고리
 class RentalCategory(models.Model):

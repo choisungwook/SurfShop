@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import SigunguForm
 from django.views.generic import FormView
 from address.models import Sido, Sigungu, Address
@@ -8,7 +8,7 @@ from shop.models import Store
 from rental.models import Rentalinventory, RentalProduct
 from django.core.exceptions import ObjectDoesNotExist
 
-#렌탈 검색 폼
+#렌탈 검색
 class searchRentalProduct(FormView):
     template_name = 'rental/search.html'
     form_class = SigunguForm
@@ -36,14 +36,13 @@ class searchRentalProduct(FormView):
 
         return render(self.request, 'rental/list.html', {'inventory': inventory})
 
+#상품을 자세히 보여준다.
+#인벤토리 id는 꼭 필요하며,
+def detail_RentalProduct(request, inventory_id):
+    inventory = get_object_or_404(Rentalinventory, pk = inventory_id)
+    return render(request, 'rental/detail.html', {'inventory':inventory})
 
-
-
-
-
-
-
-
-
-
-
+#예약
+#로그인 필요
+def make_reservation(requet):
+    pass

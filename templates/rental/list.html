@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
 
+{% load thumbnail %}
+
 <div class="content-section">
     <div class="container">
         <div class="row">
@@ -11,8 +13,8 @@
                             <img src="{% if product.rentalproduct.image %}{{ product.rentalproduct.image.url }}{% endif %}" alt="">
                         </div> <!-- /.product-thum -->
                         <div class="product-content">
-                            <h5><a href="#">{{ product.rentalproduct.name }}</a></h5>
-                            <h5><a href="#">{{ product.store.name }}</a></h5>
+                            <h5>{{ product.rentalproduct.name }}</a></h5>
+                            <h5><a href="{% url 'rental:detail' product.id %}">{{ product.store.name }}</a></h5>
                             <span class="tagline">{{ product.rentalproduct.price }}</span>
                         </div> <!-- /.product-content -->
                     </div> <!-- /.product-item-vote -->
