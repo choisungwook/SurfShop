@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  {% for item in cart %}
+    <div class="product-thumb">
+        <img src="{% if item.RentalProduct.image %}{{ item.RentalProduct.image.url }}{% endif %}" alt="">
+        <h5>{{ item.RentalProduct.name }}</h5>
+        <h5>{{ item.RentalProduct.id }}</h5>
+        <a href="{% url 'cart:remove' item.RentalProduct.id %}" class="main-btn">장바구니 삭제</a>
+    </div> <!-- /.product-thum -->
+  {% endfor %}
+
+{% endblock %}

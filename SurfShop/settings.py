@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'rental',
     'shop',
     'django_extensions',
-    'sorl.thumbnail',
 ]
 
 MIDDLEWARE = [
@@ -135,3 +134,6 @@ STATICFILES_DIRS = (
 
 MEDIA_URL = '/uploads/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads/')
+
+#sessions
+CART_SESSION_ID = 'cart'

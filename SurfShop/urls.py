@@ -22,10 +22,9 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^rental/', include('rental.urls', namespace='rental')),
     url(r'^address/', include('address.urls', namespace='address')),
+    url(r'^cart/', include('Cart.urls', namespace='cart')),
 ]
 
 #if django is develop mode ...
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-
