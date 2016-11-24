@@ -15,8 +15,7 @@ class Cart(object):
         inventory_id = str(inventory.id)
 
         if inventory_id not in self.cart:
-            self.cart[inventory_id] = {'quantity' : 0,
-                                        'price' : str(inventory.rentalproduct.price)}
+            self.cart[inventory_id] = {'quantity' : 0}
 
         self.cart[inventory_id]['quantity'] = quantity
         self.save()
@@ -41,8 +40,8 @@ class Cart(object):
             self.cart[str(inventory.id)]['inventory'] = inventory
 
         for item in self.cart.values():
-            item['price'] = Decimal(item['price'])
-            item['total_price'] = item['price'] * item['quantity']
+            price = Decimal(item['inventory'].rentalproduct.price)
+            item['total_price'] = price * item['quantity']
             yield item
 
     def __len__(self):

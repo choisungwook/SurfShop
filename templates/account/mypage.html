@@ -14,10 +14,10 @@
       <table class="table table-condensed">
         <thead>
           <tr class="cart_menu">
-            <td class="image">Item</td>
-            <td class="description"></td>
-            <td class="price">Price</td>
-            <td class="quantity">Quantity</td>
+            <td class="image"></td>
+            <td class="description">제목</td>
+            <td class="price">가격</td>
+            <td class="quantity">수량</td>
             <td class="total">Total</td>
             <td class="total">상태</td>
             <td></td>
@@ -40,17 +40,10 @@
               <p>{{ item.inventory.rentalproduct.price }}</p>
             </td>
             <td class="cart_quantity">
-              <form action="{% url 'cart:add' item.inventory.id  %}" method="post">
-                {{ item.update_quantity_form.quantity }}</br>
-                {% csrf_token %}
-                <input type="submit" value="수정" class="btn btn-default add-to-cart">
-              </form>
+                {{ item.stock }}</br>
             </td>
             <td class="cart_total">
-              <p class="cart_total_price">{{ cart.get_total_price }}</p>
-            </td>
-            <td class="cart_delete">
-              <a class="cart_quantity_delete" href="{% url 'cart:remove' item.inventory.id %}"><i class="fa fa-times"></i></a>
+              <p class="cart_total_price">{{ item.total_price }}</p>
             </td>
             <td class="cart_total">
               <p class="cart_total_price">{{ item.status }}</p>
@@ -60,7 +53,7 @@
         </tbody>
       </table>
     </div>
-    <a href="{% url 'rental:reservation' %}"><button class="btn btn-default">주문하기</button></a>
+    <a href="#"><button class="btn btn-default">취소하기</button></a>
   </div>
 </section> <!--/#cart_items-->
 {% endblock %}

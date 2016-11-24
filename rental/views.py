@@ -13,6 +13,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.utils import timezone
 from account.models import Customer
+from django.core.exceptions import ObjectDoesNotExist
 
 #렌탈 검색
 def searchRentalProduct(request):
@@ -59,8 +60,12 @@ def make_reservation(request):
     customer = Customer.objects.get(user=user)
 
     for inventory in cart:
-        print inventory, '\n'
-        Reservation.objects.create(customer=customer, inventory=inventory['inventory'], in_date=timezone.now(),
-        out_date=timezone.now(), status=0, stock=inventory['quantity'])
+        reservation = Reservation.objects.filter(customer=customer, inventory=inventory['inventory'])
 
-    HttpResponseRedirect(reverse('account:mypage'))
+        if reservation.exists():
+            reservation.update(stock=inventory['quantity'])
+        else:
+            Reservation.objects.create(customer=customer, inventory=inventory['inventory'], in_date=timezone.now(),
+            out_date=timezone.now(), status=0, stock=inventory['quantity'])
+
+    return HttpResponseRedirect(reverse('account:mypage'))

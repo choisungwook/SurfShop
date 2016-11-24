@@ -74,3 +74,6 @@ class Reservation(models.Model):
 
     class Meta:
         db_table = 'Reservation'
+
+    def total_price(self):
+        return self.stock * self.inventory.rentalproduct.price
