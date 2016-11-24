@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^rental/', include('rental.urls', namespace='rental')),
     url(r'^address/', include('address.urls', namespace='address')),
     url(r'^cart/', include('Cart.urls', namespace='cart')),
+    url(r'^account/', include('account.urls', namespace='account')),
 ]
 
 #if django is develop mode ...

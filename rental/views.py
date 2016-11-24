@@ -8,6 +8,8 @@ from shop.models import Store
 from rental.models import Rentalinventory, RentalProduct
 from django.core.exceptions import ObjectDoesNotExist
 from Cart.forms import AddCartForm
+from Cart.cart import Cart
+from django.contrib.auth.decorators import login_required
 
 #렌탈 검색
 def searchRentalProduct(request):
@@ -45,8 +47,11 @@ def detail_RentalProduct(request, inventory_id):
     inventory = get_object_or_404(Rentalinventory, pk = inventory_id)
     return render(request, 'rental/detail.html', {'inventory':inventory})
 
-
 #예약
 #로그인 필요
+@login_required(login_url='/accounts/login/')
 def make_reservation(requet):
+    cart = Cart(requet)
     pass
+    # if requet.method == "POST":
+    #     for inventory in cart:

@@ -39,7 +39,7 @@
             </td>
             <td class="cart_quantity">
               <form action="{% url 'cart:add' item.inventory.id  %}" method="post">
-                {{ item.update_quantity_form.quantity }}
+                {{ item.update_quantity_form.quantity }}</br>
                 {% csrf_token %}
                 <input type="submit" value="수정" class="btn btn-default add-to-cart">
               </form>
@@ -55,6 +55,7 @@
         </tbody>
       </table>
     </div>
+    <input type="submit" value="주문하기" class="btn btn-default">
   </div>
 </section> <!--/#cart_items-->
 {% endblock %}
