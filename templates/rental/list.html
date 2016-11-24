@@ -1,25 +1,34 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load thumbnail %}
 
 <div class="content-section">
-    <div class="container">
-        <div class="row">
-            {% for product in inventory %}
-                <div class="col-md-4 col-sm-6">
-                    <div class="product-item-vote">
-                        <div class="product-thumb">
-                            <img src="{% if product.rentalproduct.image %}{{ product.rentalproduct.image.url }}{% endif %}" alt="">
-                        </div> <!-- /.product-thum -->
-                        <div class="product-content">
-                            <h5>{{ product.rentalproduct.name }}</a></h5>
-                            <h5><a href="{% url 'rental:detail' product.id %}">{{ product.store.name }}</a></h5>
-                            <span class="tagline">{{ product.rentalproduct.price }}</span>
-                            <a href="{% url 'cart:add' product.id %}" class="main-btn">장바구니 추가</a>
-                        </div> <!-- /.product-content -->
-                    </div> <!-- /.product-item-vote -->
-                </div> <!-- /.col-md-3 -->
-            {% endfor %}
+  <div class="container">
+    <div class="row">
+      {% for product in inventory %}
+        <div class="col-sm-4">
+          <div class="product-image-wrapper">
+            <div class="single-products">
+              <div class="productinfo text-center">
+                {% thumbnail product.rentalproduct.image "350x350" crop="center" as im %}
+                  <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+                {% endthumbnail %}
+                <h2>{{ product.rentalproduct.price }}</h2>
+                <p>{{ product.rentalproduct.name }}</p>
+                <p>{{ product.store.name }}</p>
+
+                <form action="{% url 'cart:add' product.id %}" method="post">
+                  {{ cart_product_form.as_p }}
+                  {% csrf_token %}
+                  <input type="submit" value="장바구니" class="btn btn-default add-to-cart">
+                  <!-- <i class="fa fa-shopping-cart"><Button type="submit" value="장바구니" class="btn btn-default add-to-cart"> -->
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
+      {% endfor %}
     </div>
+  </div>
 </div>
 {% endblock %}

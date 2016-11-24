@@ -11,18 +11,14 @@ class Cart(object):
             cart = self.session[settings.CART_SESSION_ID] = {}
         self.cart = cart
 
-    def add(self, inventory, quantity=1, update_quantity=False):
+    def add(self, inventory, quantity=1):
         inventory_id = str(inventory.id)
 
         if inventory_id not in self.cart:
             self.cart[inventory_id] = {'quantity' : 0,
                                         'price' : str(inventory.rentalproduct.price)}
 
-        if update_quantity:
-            self.cart[inventory_id]['quantity'] = quantity
-        else:
-            self.cart[inventory_id]['quantity'] += quantity
-
+        self.cart[inventory_id]['quantity'] = quantity
         self.save()
 
     def save(self):
@@ -42,13 +38,12 @@ class Cart(object):
         inventories = Rentalinventory.objects.filter(id__in=inventory_ids)
 
         for inventory in inventories:
-            self.cart[str(inventory.id)]['RentalProduct'] = inventory.rentalproduct
+            self.cart[str(inventory.id)]['inventory'] = inventory
 
         for item in self.cart.values():
             item['price'] = Decimal(item['price'])
             item['total_price'] = item['price'] * item['quantity']
             yield item
-
 
     def __len__(self):
         return sum(item['quantity'] for item in self.cart.values())

@@ -1,13 +1,60 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  {% for item in cart %}
-    <div class="product-thumb">
-        <img src="{% if item.RentalProduct.image %}{{ item.RentalProduct.image.url }}{% endif %}" alt="">
-        <h5>{{ item.RentalProduct.name }}</h5>
-        <h5>{{ item.RentalProduct.id }}</h5>
-        <a href="{% url 'cart:remove' item.RentalProduct.id %}" class="main-btn">장바구니 삭제</a>
-    </div> <!-- /.product-thum -->
-  {% endfor %}
+{% load thumbnail %}
 
+<section id="cart_items">
+  <div class="container">
+    <div class="breadcrumbs">
+      <ol class="breadcrumb">
+      </ol>
+    </div>
+    <div class="table-responsive cart_info">
+      <table class="table table-condensed">
+        <thead>
+          <tr class="cart_menu">
+            <td class="image">Item</td>
+            <td class="description"></td>
+            <td class="price">Price</td>
+            <td class="quantity">Quantity</td>
+            <td class="total">Total</td>
+            <td></td>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in cart %}
+          <tr>
+            <td class="cart_product">
+              {% thumbnail item.inventory.rentalproduct.image "150x150" crop="center" as im %}
+                <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+              {% endthumbnail %}
+              <!-- <img src="{% if item.rentalProduct.image %}{{ item.rentalProduct.image.url }}{% endif %}" alt=""></a> -->
+            </td>
+            <td class="cart_description">
+              <h4><a href="">{{ item.inventory.rentalproduct.name }}</a></h4>
+              <p>{{ item.inventory.store.name }}</p>
+            </td>
+            <td class="cart_price">
+              <p>{{ item.inventory.rentalproduct.price }}</p>
+            </td>
+            <td class="cart_quantity">
+              <form action="{% url 'cart:add' item.inventory.id  %}" method="post">
+                {{ item.update_quantity_form.quantity }}
+                {% csrf_token %}
+                <input type="submit" value="수정" class="btn btn-default add-to-cart">
+              </form>
+            </td>
+            <td class="cart_total">
+              <p class="cart_total_price">{{ cart.get_total_price }}</p>
+            </td>
+            <td class="cart_delete">
+              <a class="cart_quantity_delete" href="{% url 'cart:remove' item.inventory.id %}"><i class="fa fa-times"></i></a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section> <!--/#cart_items-->
 {% endblock %}
