@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{% load thumbnail %}
+  <!-- 예약한 상품을 보여준다.  -->
 
+{% load thumbnail %}
 <section id="cart_items">
   <div class="container">
     <div class="breadcrumbs">
@@ -18,11 +19,12 @@
             <td class="price">Price</td>
             <td class="quantity">Quantity</td>
             <td class="total">Total</td>
+            <td class="total">상태</td>
             <td></td>
           </tr>
         </thead>
         <tbody>
-          {% for item in cart %}
+          {% for item in items %}
           <tr>
             <td class="cart_product">
               {% thumbnail item.inventory.rentalproduct.image "150x150" crop="center" as im %}
@@ -49,6 +51,9 @@
             </td>
             <td class="cart_delete">
               <a class="cart_quantity_delete" href="{% url 'cart:remove' item.inventory.id %}"><i class="fa fa-times"></i></a>
+            </td>
+            <td class="cart_total">
+              <p class="cart_total_price">{{ item.status }}</p>
             </td>
           </tr>
           {% endfor %}

@@ -1,15 +1,18 @@
 # -*- coding: utf-8 -*-
 
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponseRedirect, reverse
 from .forms import SigunguForm
 from django.views.generic import FormView
 from address.models import Sido, Sigungu, Address
 from shop.models import Store
-from rental.models import Rentalinventory, RentalProduct
+from rental.models import Rentalinventory, RentalProduct, Reservation
 from django.core.exceptions import ObjectDoesNotExist
 from Cart.forms import AddCartForm
 from Cart.cart import Cart
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.utils import timezone
+from account.models import Customer
 
 #렌탈 검색
 def searchRentalProduct(request):
@@ -49,9 +52,15 @@ def detail_RentalProduct(request, inventory_id):
 
 #예약
 #로그인 필요
-@login_required(login_url='/accounts/login/')
-def make_reservation(requet):
-    cart = Cart(requet)
-    pass
-    # if requet.method == "POST":
-    #     for inventory in cart:
+@login_required(login_url='account:login')
+def make_reservation(request):
+    cart = Cart(request)
+    user = User.objects.get(username=request.user)
+    customer = Customer.objects.get(user=user)
+
+    for inventory in cart:
+        print inventory, '\n'
+        Reservation.objects.create(customer=customer, inventory=inventory['inventory'], in_date=timezone.now(),
+        out_date=timezone.now(), status=0, stock=inventory['quantity'])
+
+    HttpResponseRedirect(reverse('account:mypage'))

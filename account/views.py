@@ -4,6 +4,9 @@ from django.contrib.auth import authenticate, login, logout
 from .forms import LoginForm
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
+from rental.models import Reservation
+from django.contrib.auth.models import User
+from .models import Customer
 
 #로그인
 def loginView(request):
@@ -33,3 +36,15 @@ def loginView(request):
 def logoutView(request):
     logout(request)
     return redirect(reverse('account:login'))
+
+#마이페이지
+#현재는 주문한내용만 보여줌
+@login_required(login_url='/accounts/login/')
+def mypage(request):
+    user = User.objects.get(username=request.user)
+    customer = Customer.objects.get(user=user)
+
+    reservation = Reservation.objects.filter(customer=customer)
+
+
+    return render(request, 'account/mypage.html', {'items': reservation})

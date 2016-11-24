@@ -59,6 +59,9 @@ class Rentalinventory(models.Model):
     class Meta:
         db_table = 'Rentalinventory'
 
+    def __unicode__(self):
+        return self.rentalproduct.name
+
 #예약 모델
 #상태코드 0 : 예약상태, 1, 확인됨, 2. 예약중
 class Reservation(models.Model):
@@ -71,8 +74,3 @@ class Reservation(models.Model):
 
     class Meta:
         db_table = 'Reservation'
-
-
-
-
-
