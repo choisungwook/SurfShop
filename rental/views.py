@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from django.shortcuts import render, redirect, get_object_or_404, HttpResponseRedirect, reverse
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponseRedirect, reverse, HttpResponse
 from .forms import SigunguForm
 from django.views.generic import FormView
 from address.models import Sido, Sigungu, Address
@@ -59,13 +59,21 @@ def make_reservation(request):
     user = User.objects.get(username=request.user)
     customer = Customer.objects.get(user=user)
 
+    #예약하기 위해서는 수량을 체크해야됨
+    #주문할려는 상품의 갯수가 현재 잔고보다 많은 경우 주문이 안되고 에러메세지를 출력해야됨
     for inventory in cart:
-        reservation = Reservation.objects.filter(customer=customer, inventory=inventory['inventory'])
+        if inventory['inventory'].rentalproduct.stock < inventory['quantity']:
+            return HttpResponse('[Error] 예약수량이 기존상품보다 많습니다')
 
-        if reservation.exists():
-            reservation.update(stock=inventory['quantity'])
-        else:
-            Reservation.objects.create(customer=customer, inventory=inventory['inventory'], in_date=timezone.now(),
-            out_date=timezone.now(), status=0, stock=inventory['quantity'])
+    for inventory in cart:
+        stock = inventory['inventory'].rentalproduct.stock - inventory['quantity']
+        inventory['inventory'].rentalproduct.stock = stock
+        inventory['inventory'].rentalproduct.save()
+
+        Reservation.objects.create(customer=customer, inventory=inventory['inventory'], in_date=timezone.now(),
+        out_date=timezone.now(), status=0, stock=inventory['quantity'])
+
+        #주문이 완료되면 장바구니에서 삭제한다.
+        cart.remove(inventory['inventory'])
 
     return HttpResponseRedirect(reverse('account:mypage'))

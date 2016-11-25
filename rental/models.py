@@ -49,6 +49,9 @@ class RentalProduct(models.Model):
     def get_absoulte_url(self):
         return reverse('shop:product_detail', args=[self.id, self.slug])
 
+    def get_stock(self):
+        return self.stock
+
 #렌탈 인벤토리 모델
 #상점, 상품이랑 연결되어 있음
 #검색때 유용하게 사용됨
@@ -63,7 +66,7 @@ class Rentalinventory(models.Model):
         return self.rentalproduct.name
 
 #예약 모델
-#상태코드 0 : 예약상태, 1, 확인됨, 2. 예약중
+#상태코드 0 : 예약중, 1. 예약확인
 class Reservation(models.Model):
     customer = models.ForeignKey(Customer, related_name='customer')
     inventory = models.ForeignKey(Rentalinventory, related_name='rentalinventory')
@@ -74,6 +77,7 @@ class Reservation(models.Model):
 
     class Meta:
         db_table = 'Reservation'
+        ordering = ('in_date', 'status',) #정렬 1순위 in_date 2순위 상태
 
     def total_price(self):
         return self.stock * self.inventory.rentalproduct.price

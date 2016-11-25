@@ -1,9 +1,10 @@
+# -*- coding: utf-8 -*-
+
 from decimal import Decimal
 from django.conf import settings
 from rental.models import Rentalinventory
 
 class Cart(object):
-
     def __init__(self, request):
         self.session = request.session
         cart = self.session.get(settings.CART_SESSION_ID)
@@ -11,7 +12,7 @@ class Cart(object):
             cart = self.session[settings.CART_SESSION_ID] = {}
         self.cart = cart
 
-    def add(self, inventory, quantity=1):
+    def add(self, inventory, quantity):
         inventory_id = str(inventory.id)
 
         if inventory_id not in self.cart:

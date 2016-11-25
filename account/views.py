@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from rental.models import Reservation
 from django.contrib.auth.models import User
 from .models import Customer
+from django.core.mail import send_mail
 
 #로그인
 def loginView(request):
@@ -43,8 +44,6 @@ def logoutView(request):
 def mypage(request):
     user = User.objects.get(username=request.user)
     customer = Customer.objects.get(user=user)
-
     reservation = Reservation.objects.filter(customer=customer)
-
 
     return render(request, 'account/mypage.html', {'items': reservation})

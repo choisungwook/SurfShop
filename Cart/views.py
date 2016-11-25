@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, HttpResponse
 from .cart import Cart
 from rental.models import Rentalinventory
 from django.views.generic import FormView
@@ -16,7 +16,13 @@ def add_to_cart(request, inventory_id):
 
     if form.is_valid():
         cd = form.cleaned_data
-        cart.add(inventory=inventory, quantity=cd['quantity'])
+        quantity = cd['quantity']
+
+        #수량체크
+        if inventory.rentalproduct.get_stock() >= quantity:
+            cart.add(inventory=inventory, quantity=quantity)
+        else:
+            HttpResponse('[Error] 주문수량이 기존수량보다 많습니다')
 
     return redirect('cart:detail')
 
