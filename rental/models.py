@@ -81,3 +81,10 @@ class Reservation(models.Model):
 
     def total_price(self):
         return self.stock * self.inventory.rentalproduct.price
+
+    def save(self, *args, **kwargs):
+        super(Reservation, self).save(*args, **kwargs) # Call the "real" save()
+
+    def update(self, *args, **kwargs):
+        print self.status, args, kwargs,'\n'
+        pass
