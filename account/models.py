@@ -14,11 +14,10 @@ class Customer(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, unique=True)
     #image = models.ImageField(upload_to=lambda instance, filename:'customers/{0}.jpg'.format(instance.user.id), blank=True )
     image = models.ImageField(upload_to=generate_filename, blank=True)
-    address = models.ForeignKey(Address)
+    address = models.ForeignKey(Address, unique=False, null=True)
 
     class Meta:
         db_table = 'customer'
 
     def __unicode__(self):
         return self.user.username
-

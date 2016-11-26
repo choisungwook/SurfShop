@@ -33,7 +33,7 @@
                 <div class="row">
                     <div class="col-md-6 col-sm-6">
                         <div class="top-header-left">
-                            <a href="#">회원가입</a>
+                            <a href="{% url 'account:register' %}">회원가입</a>
                             {% if user.is_authenticated %}
                               <a href="{% url 'account:logout' %}">로그아웃</a>
                               <a href="{% url 'cart:detail' %}">장바구니</a>
