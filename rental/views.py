@@ -23,22 +23,21 @@ def searchRentalProduct(request):
 
     elif request.method == "POST":
         form = SigunguForm(request.POST)
-        cart_product_form =  AddCartForm()
+        cart_product_form = AddCartForm()
 
         if form.is_valid():
             sido_name = form.cleaned_data['sido']
             sigungu_name = form.cleaned_data['sigungu']
-
+            print sido_name, sigungu_name
+            #예외처리
+            #도중에 아무것도 없을 경우 None을 리턴
             try:
-                #예외처리 필요함
-                #도중에 아무것도 없을 경우 None을 리턴해야 할듯
-                sigungu = Sigungu.objects.get(sido=sido_name, name=sigungu_name)
-                address = Address.objects.get(Sigungu=sigungu)
-                store = Store.objects.get(address=address)
+                sigungu = Sigungu.objects.filter(sido=sido_name, name=sigungu_name)
+                address = Address.objects.filter(Sigungu=sigungu)
+                store = Store.objects.filter(address__in=address)
 
                 #인벤토리 검색
-                inventory = Rentalinventory.objects.filter(store=store)
-
+                inventory = Rentalinventory.objects.filter(store__in=store)
             except ObjectDoesNotExist:
                 inventory = None
 
