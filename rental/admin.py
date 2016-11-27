@@ -13,7 +13,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_filter = ['available', 'published', 'last_update']
     list_editable = ['price', 'stock', 'available']
     prepopulated_fields = {'slug': ('name',)}
-4
+
 admin.site.register(RentalProduct, ProductAdmin)
 
 class RentalinventoryAdmin(admin.ModelAdmin):
@@ -26,4 +26,3 @@ class ReservationAdmin(admin.ModelAdmin):
     list_editable = ['status', 'stock']
     list_filter = ['customer']
 admin.site.register(Reservation, ReservationAdmin)
-
