@@ -1,13 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load thumbnail %}
-
-<div class="content-section">
-  <div class="container">
-    <div class="row">
       {% for product in inventory %}
-        <div class="col-sm-4">
-          <div class="product-image-wrapper">
+          <!-- <div class="product-image-wrapper">
             <div class="single-products">
               <div class="productinfo text-center">
                 {% thumbnail product.rentalproduct.image "350x350" crop="center" as im %}
@@ -21,14 +16,49 @@
                   {{ cart_product_form.as_p }}
                   {% csrf_token %}
                   <input type="submit" value="장바구니" class="btn btn-default add-to-cart">
-                  <!-- <i class="fa fa-shopping-cart"><Button type="submit" value="장바구니" class="btn btn-default add-to-cart"> -->
                 </form>
               </div>
             </div>
+          </div> -->
+
+          <div class="row" id="lightblue">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="panel panel-info coupon">
+                  <div class="panel-heading" id="head">
+                    <div class="panel-title" id="title">
+                        <!-- <i class="fa fa-github fa-2x"></i> -->
+                        <span class="hidden-xs">{{ product.rentalproduct.name }}</span>
+                        <span class="visible-xs">{{ product.rentalproduct.name }}</span>
+                    </div>
+                  </div>
+                  <div class="panel-body">
+                    {% thumbnail product.rentalproduct.image "250x250" crop="center" as im %}
+                      <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" class="coupon-img img-rounded">
+                    {% endthumbnail %}
+                    <div class="col-md-9">
+                        <ul class="items">
+                        </ul>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="offer text-info">
+                          <span class="number">{{ product.rentalproduct.price }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <p class="disclosure">{{ product.rentalproduct.description }}</p>
+                    </div>
+                  </div>
+                  <div class="panel-footer">
+                    <form action="{% url 'cart:add' product.id %}" method="post">
+                      {{ cart_product_form.as_p }}
+                      {% csrf_token %}
+                      <input type="submit" value="장바구니" class="btn btn-default add-to-cart">
+                      <!-- <i class="fa fa-shopping-cart"><Button type="submit" value="장바구니" class="btn btn-default add-to-cart"> -->
+                    </form>
+                  </div>
+                </div>
+            </div>
           </div>
-        </div>
       {% endfor %}
-    </div>
-  </div>
-</div>
+
 {% endblock %}
