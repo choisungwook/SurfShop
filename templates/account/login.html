@@ -13,29 +13,23 @@
 <div class="col-sm-12">
   <h3 class="text-center">반갑습니다.</br></br>로그인 부탁드립니다.</h3>
   <div class="wrapper">
-      <form action="" method="post" name="Login_Form" class="form-signin">
+      <form action="{% url 'account:login' %}" method="post" name="Login_Form" class="form-signin">
           <hr class="spartan">
           <div class="input-group">
               <span class="input-group-addon" id="sizing-addon1">
                   <i class="fa fa-user"></i>
               </span>
-             <input type="text" class="form-control" name="Username" placeholder="Username" required="" autofocus="" />
+             <input class="form-control" placeholder="username" id="id_username" name="username" type="text" required />
           </div>
           <div class="input-group">
               <span class="input-group-addon" id="sizing-addon1">
                   <i class="fa fa-lock"></i>
               </span>
-             <input type="password" class="form-control" name="Password" placeholder="Password" required=""/>
+              <input class="form-control" placeholder="password" id="id_password" name="password" type="password" required />
           </div>
-          <button class="btn btn-lg btn-primary btn-block"  name="Submit" value="Entrar" type="Submit">Entrar</button>
+          {% csrf_token %}
+          <button class="btn btn-lg btn-primary btn-block"  name="Submit" value="Entrar" type="Submit">로그인</button>
       </form>
   </div>
-
-
-  		<!-- <form action="{% url 'account:login' %}" method="post">
-        {{ form.as_p }}
-        {% csrf_token %}
-  			<button type="submit" class="btn btn-default">Login</button>
-  		</form> -->
 </div>
 {% endblock %}

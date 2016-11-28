@@ -56,6 +56,10 @@ def register(request):
 
             Customer.objects.create(user=new_user, image=customer_form.cleaned_data['image'])
             return HttpResponse('회원가입에 성공하셨습니다')
+        else:
+            messages.error(request, '정보가 올바르지 않습니다. 다시 입력해주세요')
+            return redirect(reverse('account:register'))
+            
     else:
         user_form = UserRegistrationForm()
         customer_form = CustomerRegistrationForm()

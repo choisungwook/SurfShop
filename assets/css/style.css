@@ -110,13 +110,6 @@ sup {
 .wrapper{
     margin-top: 45px;
 }
-.wrapper h3 {
-    color: #1fa67b;
-    font-size: 18px;
-    text-align: center;
-    font-weight: bold;
-    padding-bottom: 20px;
-}
 .form-signin{
   max-width: 420px;
   padding: 30px 38px 66px;
