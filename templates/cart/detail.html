@@ -40,7 +40,7 @@
             <form action="{% url 'cart:add' item.inventory.id  %}" method="post">
               {{ item.update_quantity_form.quantity }}
               {% csrf_token %}
-              <input type="submit" value="수정" class="btn btn-default add-to-cart">
+              <input type="submit" value="수정" class="btn btn-secondary btn-smt">
             </form>
           </td>
           <td class="col-sm-1 col-md-1 text-center"><strong>{{ item.total_price }}</strong></td>
@@ -53,11 +53,11 @@
         {% endfor %}
       </tbody>
   </table>
-  <a href="{% url 'rental:reservation' %}"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> 주문하기</button></td>
+  <div class="panel panel-primary">
+		<div class="panel-heading">
+			<h3 class="panel-title">총 가격 : {{ cart.get_total_price }}</h3>
+		</div>
+  </div>
+  <a href="{% url 'rental:reservation' %}"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-remove"></span> 주문하기</button></td>
 </div>
-
-
-
-
-
 {% endblock %}

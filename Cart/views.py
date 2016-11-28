@@ -36,6 +36,9 @@ def add_to_cart(request, inventory_id):
 
         return redirect('cart:detail')
 
+def update_cart(request):
+    pass
+
 #카트 리스트(자세히)보기
 def cart_detail(request):
     cart = Cart(request)
