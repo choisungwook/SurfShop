@@ -1,64 +1,49 @@
-{% extends 'base.html' %}
-{% block content %}
-{% load thumbnail %}
-      {% for product in inventory %}
-          <!-- <div class="product-image-wrapper">
-            <div class="single-products">
-              <div class="productinfo text-center">
-                {% thumbnail product.rentalproduct.image "350x350" crop="center" as im %}
-                  <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
-                {% endthumbnail %}
-                <h2>{{ product.rentalproduct.price }}</h2>
-                <p>{{ product.rentalproduct.name }}</p>
-                <p>{{ product.store.name }}</p>
+  {% extends 'base.html' %}
+  {% block content %}
+  {% load thumbnail %}
 
+{% for message in messages %}
+  {% if message.tags == "error" %}
+    <script>
+      alert('{{ message }}');
+    </script>
+  {% endif %}
+{% endfor %}
+
+<div class="col-md-12">
+  {% for product in inventory %}
+      <div class="col-sm-6 col-md-4">
+      	<div class="thumbnail" >
+      		<!-- <h4 class="text-center"><span class="label label-info">{{ product.rentalproduct.name }}</span></h4> -->
+          {% thumbnail product.rentalproduct.image "250x250" crop="center" as im %}
+            <a href="{% url 'rental:detail' product.id %}"><img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" class="img-responsive"></a>
+          {% endthumbnail %}
+
+      		<div class="caption">
+      			<div class="row">
+      				<div class="col-md-6 col-xs-6">
+      					<h3>{{ product.rentalproduct.name }}</h3>
+      				</div>
+      				<div class="col-md-6 col-xs-6 price">
+      					<h3>
+      					<label>{{ product.rentalproduct.price }}원</label></h3>
+      				</div>
+      			</div>
+      			<p>{{ product.rentalproduct.description }}</p>
+      			<div class="row">
+      				<div class="col-md-6">
+      					<!-- <a class="btn btn-primary btn-product"><span class="glyphicon glyphicon-thumbs-up"></span>장바구니</a> -->
                 <form action="{% url 'cart:add' product.id %}" method="post">
                   {{ cart_product_form.as_p }}
                   {% csrf_token %}
-                  <input type="submit" value="장바구니" class="btn btn-default add-to-cart">
+                  <input type="submit" value="장바구니"  class="btn btn-success btn-product">
                 </form>
-              </div>
-            </div>
-          </div> -->
-
-          <div class="row" id="lightblue">
-            <div class="col-md-6 col-md-offset-3">
-                <div class="panel panel-info coupon">
-                  <div class="panel-heading" id="head">
-                    <div class="panel-title" id="title">
-                        <!-- <i class="fa fa-github fa-2x"></i> -->
-                        <span class="hidden-xs">{{ product.rentalproduct.name }}</span>
-                        <span class="visible-xs">{{ product.rentalproduct.name }}</span>
-                    </div>
-                  </div>
-                  <div class="panel-body">
-                    {% thumbnail product.rentalproduct.image "250x250" crop="center" as im %}
-                      <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" class="coupon-img img-rounded">
-                    {% endthumbnail %}
-                    <div class="col-md-9">
-                        <ul class="items">
-                        </ul>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="offer text-info">
-                          <span class="number">{{ product.rentalproduct.price }}</span>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <p class="disclosure">{{ product.rentalproduct.description }}</p>
-                    </div>
-                  </div>
-                  <div class="panel-footer">
-                    <form action="{% url 'cart:add' product.id %}" method="post">
-                      {{ cart_product_form.as_p }}
-                      {% csrf_token %}
-                      <input type="submit" value="장바구니" class="btn btn-default add-to-cart">
-                      <!-- <i class="fa fa-shopping-cart"><Button type="submit" value="장바구니" class="btn btn-default add-to-cart"> -->
-                    </form>
-                  </div>
-                </div>
-            </div>
-          </div>
-      {% endfor %}
-
+      				</div>
+      			</div>
+      			<p> </p>
+      		</div>
+      	</div>
+      </div>
+  {% endfor %}
+</div>
 {% endblock %}

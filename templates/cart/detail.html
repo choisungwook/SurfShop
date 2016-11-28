@@ -3,6 +3,14 @@
 {% block content %}
 {% load thumbnail %}
 
+{% for message in messages %}
+  {% if message.tags == "error" %}
+    <script>
+      alert('{{ message }}');
+    </script>
+  {% endif %}
+{% endfor %}
+
 <section id="cart_items">
   <div class="container">
     <div class="breadcrumbs">

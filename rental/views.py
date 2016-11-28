@@ -21,34 +21,39 @@ def searchRentalProduct(request):
         form = SigunguForm()
         return render(request, 'rental/search.html', {'form': form})
 
-    elif request.method == "POST":
-        form = SigunguForm(request.POST)
-        cart_product_form = AddCartForm()
+def list_storeRentalProduct(request):
+    form = SigunguForm(request.GET)
+    cart_product_form = AddCartForm()
 
-        if form.is_valid():
-            sido_name = form.cleaned_data['sido']
-            sigungu_name = form.cleaned_data['sigungu']
-            print sido_name, sigungu_name
-            #예외처리
-            #도중에 아무것도 없을 경우 None을 리턴
-            try:
-                sigungu = Sigungu.objects.filter(sido=sido_name, name=sigungu_name)
-                address = Address.objects.filter(Sigungu=sigungu)
-                store = Store.objects.filter(address__in=address)
+    if form.is_valid():
+        sido_name = form.cleaned_data['sido']
+        sigungu_name = form.cleaned_data['sigungu']
 
-                #인벤토리 검색
-                inventory = Rentalinventory.objects.filter(store__in=store)
-            except ObjectDoesNotExist:
-                inventory = None
+        #예외처리
+        #도중에 아무것도 없을 경우 None을 리턴
+        try:
+            sigungu = Sigungu.objects.filter(sido=sido_name, name=sigungu_name)
+            address = Address.objects.filter(Sigungu=sigungu)
+            store = Store.objects.filter(address__in=address)
 
-            return render(request, 'rental/list.html', {'inventory': inventory,
-            'cart_product_form':cart_product_form})
+            #인벤토리 검색
+            inventory = Rentalinventory.objects.filter(store__in=store)
+        except ObjectDoesNotExist:
+            inventory = None
+
+        return render(request, 'rental/list.html', {'inventory': inventory,
+        'cart_product_form':cart_product_form})
+
 
 #상품을 자세히 보여준다.
 #인벤토리 id는 꼭 필요하며,
 def detail_RentalProduct(request, inventory_id):
+    cart_product_form = AddCartForm()
+    form = SigunguForm()
     inventory = get_object_or_404(Rentalinventory, pk = inventory_id)
-    return render(request, 'rental/detail.html', {'inventory':inventory})
+
+    return render(request, 'rental/detail.html', {'inventory':inventory,
+    'cart_product_form':cart_product_form})
 
 #예약
 #로그인 필요
