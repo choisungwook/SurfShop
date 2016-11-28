@@ -19,6 +19,6 @@ def pre_save_Reservation(sender, **kwargs):
         to = user.email
 
         if obj.status is 0 and instance.status is 1:
-            send_mail(title, body, 'csw19591@gmail.com', [to], fail_silently=False)
+            send_mail(title, body, 'csw19591@gmail.com', ['보낼메일'], fail_silently=False)
     except sender.DoesNotExist: #발견이 안되면 새로 만드는 경우이다.
         pass

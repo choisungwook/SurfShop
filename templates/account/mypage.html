@@ -3,60 +3,43 @@
 
 {% block content %}
 <!-- 예약한 상품을 보여준다.  -->
-<section id="cart_items">
-  <div class="container">
-    <div class="breadcrumbs">
-      <ol class="breadcrumb">
-      </ol>
-    </div>
-    <div class="table-responsive cart_info">
-      <table class="table table-condensed">
-        <thead>
-          <tr class="cart_menu">
-            <td class="image"></td>
-            <td class="description">제목</td>
-            <td class="price">가격</td>
-            <td class="quantity">수량</td>
-            <td class="total">Total</td>
-            <td class="total">상태</td>
-            <td class="total">취소</td>
-            <td></td>
+<div class="col-sm-12 col-md-10 col-md-offset-1">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>물품</th>
+        <th class="text-center">가격</th>
+        <th class="text-center">수량</th>
+        <th class="text-center">총합</th>
+        <th> </th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in items %}
+      <tr>
+        <td class="col-sm-8 col-md-6">
+          <div class="media">
+            {% thumbnail item.inventory.rentalproduct.image "72x72" crop="center" as im %}
+              <a class="thumbnail pull-left" href="#"><img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}"></a>
+            {% endthumbnail %}
+            <div class="media-body">
+              <h4 class="media-heading"><a href="#">{{ item.inventory.rentalproduct.name }}</a></h4>
+              <h5 class="media-heading"> by <a href="#">{{ item.inventory.store.name }}</a></h5>
+              <span>상태: </span><span class="text-success"><strong>{{ item.get_status }}</strong></span>
+            </div>
+          </div></td>
+          <td class="col-sm-1 col-md-1 text-center"><strong>{{ item.inventory.rentalproduct.price }}</strong></td>
+          <td class="col-sm-1 col-md-1 text-center"><strong>{{ item.stock }}</strong></td>
+          <td class="col-sm-1 col-md-1 text-center"><strong>{{ item.total_price }}</strong></td>
+          <td class="col-sm-1 col-md-1">
+            <a href="{% url 'rental:cancel' item.id %}">
+            <button type="button" class="btn btn-danger">
+              <span class="glyphicon glyphicon-remove"></span> 삭제하기
+            </button></td>
           </tr>
-        </thead>
-        <tbody>
-          {% for item in items %}
           <tr>
-            <td class="cart_product">
-              {% thumbnail item.inventory.rentalproduct.image "150x150" crop="center" as im %}
-                <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
-              {% endthumbnail %}
-              <!-- <img src="{% if item.rentalProduct.image %}{{ item.rentalProduct.image.url }}{% endif %}" alt=""></a> -->
-            </td>
-            <td class="cart_description">
-              <h4><a href="">{{ item.inventory.rentalproduct.name }}</a></h4>
-              <p>{{ item.inventory.store.name }}</p>
-            </td>
-            <td class="cart_price">
-              <p>{{ item.inventory.rentalproduct.price }}</p>
-            </td>
-            <td class="cart_quantity">
-                {{ item.stock }}</br>
-            </td>
-            <td class="cart_total">
-              <p class="cart_total_price">{{ item.total_price }}</p>
-            </td>
-            <td class="cart_total">
-              <p class="cart_total_price">{{ item.status }}</p>
-            </td>
-            <td class="cart_total">
-              <a href="{% url 'rental:cancel' item.id %}"><button class="btn btn-danger">취소하기</button></a>
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-
-  </div>
-</section> <!--/#cart_items-->
+        {% endfor %}
+      </tbody>
+  </table>
+</div>
 {% endblock %}

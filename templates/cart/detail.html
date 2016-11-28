@@ -11,59 +11,46 @@
   {% endif %}
 {% endfor %}
 
-<section id="cart_items">
-  <div class="container">
-    <div class="breadcrumbs">
-      <ol class="breadcrumb">
-      </ol>
-    </div>
-    <div class="table-responsive cart_info">
-      <table class="table table-condensed">
-        <thead>
-          <tr class="cart_menu">
-            <td class="image">Item</td>
-            <td class="description"></td>
-            <td class="price">Price</td>
-            <td class="quantity">Quantity</td>
-            <td class="total">Total</td>
-            <td></td>
-          </tr>
-        </thead>
-        <tbody>
-          {% for item in cart %}
-          <tr>
-            <td class="cart_product">
-              {% thumbnail item.inventory.rentalproduct.image "150x150" crop="center" as im %}
-                <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
-              {% endthumbnail %}
-              <!-- <img src="{% if item.rentalProduct.image %}{{ item.rentalProduct.image.url }}{% endif %}" alt=""></a> -->
-            </td>
-            <td class="cart_description">
-              <h4><a href="">{{ item.inventory.rentalproduct.name }}</a></h4>
-              <p>{{ item.inventory.store.name }}</p>
-            </td>
-            <td class="cart_price">
-              <p>{{ item.inventory.rentalproduct.price }}</p>
-            </td>
-            <td class="cart_quantity">
-              <form action="{% url 'cart:add' item.inventory.id  %}" method="post">
-                {{ item.update_quantity_form.quantity }}</br>
-                {% csrf_token %}
-                <input type="submit" value="수정" class="btn btn-default add-to-cart">
-              </form>
-            </td>
-            <td class="cart_total">
-              <p class="cart_total_price">{{ item.total_price }}</p>
-            </td>
-            <td class="cart_delete">
-              <a class="cart_quantity_delete" href="{% url 'cart:remove' item.inventory.id %}"><i class="fa fa-times"></i></a>
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-    <a href="{% url 'rental:reservation' %}"><button class="btn btn-default">주문하기</button></a>
-  </div>
-</section> <!--/#cart_items-->
+<div class="col-sm-12 col-md-10 col-md-offset-1">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>물품</th>
+        <th class="text-center">가격</th>
+        <th class="text-center">수량</th>
+        <th class="text-center">총합</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in cart %}
+      <tr>
+        <td class="col-sm-8 col-md-6">
+          <div class="media">
+            {% thumbnail item.inventory.rentalproduct.image "150x150" crop="center" as im %}
+              <a class="thumbnail pull-left" href="#"><img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}"></a>
+            {% endthumbnail %}
+            <div class="media-body">
+              <h4 class="media-heading"><a href="#">{{ item.inventory.rentalproduct.name }}</a></h4>
+              <h5 class="media-heading"> by <a href="#">{{ item.inventory.store.name }}</a></h5>
+            </div>
+          </div></td>
+          <td class="col-sm-1 col-md-1 text-center"><strong>{{ item.inventory.rentalproduct.price }}</strong></td>
+          <td class="col-sm-1 col-md-1 text-center">
+            <form action="{% url 'cart:add' item.inventory.id  %}" method="post">
+              {{ item.update_quantity_form.quantity }}
+              {% csrf_token %}
+              <input type="submit" value="수정" class="btn btn-default add-to-cart">
+            </form>
+          </td>
+          <td class="col-sm-1 col-md-1 text-center"><strong>{{ item.total_price }}</strong></td>
+        {% endfor %}
+      </tbody>
+  </table>
+  <a href="{% url 'rental:reservation' %}"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> 주문하기</button></td>
+</div>
+
+
+
+
+
 {% endblock %}

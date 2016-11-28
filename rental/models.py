@@ -68,11 +68,20 @@ class Rentalinventory(models.Model):
 #예약 모델
 #상태코드 0 : 예약중, 1. 예약확인
 class Reservation(models.Model):
+    #status
+    PREPARED = 0
+    CONFIRMED = 1
+    CANCELED = 2
+
+    RESERVATION_STATUS = ((PREPARED, 'Prepared'),
+                        (CONFIRMED, 'Confirmed'),
+                        (CANCELED, 'Canceled'),)
+
     customer = models.ForeignKey(Customer, related_name='customer')
     inventory = models.ForeignKey(Rentalinventory, related_name='rentalinventory')
     in_date = models.DateTimeField(blank=True, null=False)
     out_date = models.DateTimeField(blank=True, null=False)
-    status = models.IntegerField(null=False)
+    status = models.IntegerField(null=False, choices=RESERVATION_STATUS)
     stock = models.PositiveIntegerField()
 
     class Meta:
@@ -87,4 +96,8 @@ class Reservation(models.Model):
 
     def update(self, *args, **kwargs):
         print self.status, args, kwargs,'\n'
-        pass
+
+    def get_status(self):
+        for i, v in self.RESERVATION_STATUS:
+            if i is self.status:
+                return v
