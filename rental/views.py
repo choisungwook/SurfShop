@@ -81,3 +81,18 @@ def make_reservation(request):
         cart.remove(inventory['inventory'])
 
     return HttpResponseRedirect(reverse('account:mypage'))
+
+@login_required(login_url='account:login')
+def cancel_reservation(request, reservation_id):
+    customer = Customer.objects.filter(user=request.user)
+    #삭제할 예약을 얻음
+    delete_reservation = Reservation.objects.get(id=reservation_id, customer=customer)
+    inventory = Rentalinventory.objects.filter(id=delete_reservation.inventory.id)
+    rentalproduct = RentalProduct.objects.get(id__in=inventory)
+    #수량 수정
+    rentalproduct.stock += delete_reservation.stock
+    rentalproduct.save()
+    # #예약삭제
+    delete_reservation.delete()
+    # #예약페이지로이동
+    return redirect(reverse('account:mypage'))

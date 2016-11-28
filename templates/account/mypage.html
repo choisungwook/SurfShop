@@ -1,9 +1,8 @@
 {% extends 'base.html' %}
+{% load thumbnail %}
 
 {% block content %}
-  <!-- 예약한 상품을 보여준다.  -->
-
-{% load thumbnail %}
+<!-- 예약한 상품을 보여준다.  -->
 <section id="cart_items">
   <div class="container">
     <div class="breadcrumbs">
@@ -20,6 +19,7 @@
             <td class="quantity">수량</td>
             <td class="total">Total</td>
             <td class="total">상태</td>
+            <td class="total">취소</td>
             <td></td>
           </tr>
         </thead>
@@ -48,12 +48,15 @@
             <td class="cart_total">
               <p class="cart_total_price">{{ item.status }}</p>
             </td>
+            <td class="cart_total">
+              <a href="{% url 'rental:cancel' item.id %}"><button class="btn btn-danger">취소하기</button></a>
+            </td>
           </tr>
           {% endfor %}
         </tbody>
       </table>
     </div>
-    <a href="#"><button class="btn btn-default">취소하기</button></a>
+
   </div>
 </section> <!--/#cart_items-->
 {% endblock %}
