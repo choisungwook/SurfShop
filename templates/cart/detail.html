@@ -19,6 +19,7 @@
         <th class="text-center">가격</th>
         <th class="text-center">수량</th>
         <th class="text-center">총합</th>
+        <th> </th>
       </tr>
     </thead>
     <tbody>
@@ -43,6 +44,12 @@
             </form>
           </td>
           <td class="col-sm-1 col-md-1 text-center"><strong>{{ item.total_price }}</strong></td>
+          <td class="col-sm-1 col-md-1">
+            <a href="{% url 'cart:remove' item.inventory.id %}">
+            <button type="button" class="btn btn-danger">
+              <span class="glyphicon glyphicon-remove"></span> 삭제하기
+            </button>
+          </td>
         {% endfor %}
       </tbody>
   </table>
