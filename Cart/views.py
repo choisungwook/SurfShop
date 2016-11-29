@@ -16,7 +16,7 @@ def add_to_cart(request, inventory_id):
     cart = Cart(request)
     form = AddCartForm(request.POST)
     inventory = get_object_or_404(Rentalinventory, id=inventory_id)
-
+    print form, '\n'
     if form.is_valid():
         cd = form.cleaned_data
         quantity = cd['quantity']

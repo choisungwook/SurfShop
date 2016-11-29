@@ -21,9 +21,11 @@ def searchRentalProduct(request):
         form = SigunguForm()
         return render(request, 'rental/search.html', {'form': form})
 
+#상점 상품 리스트
 def list_storeRentalProduct(request):
     form = SigunguForm(request.GET)
     cart_product_form = AddCartForm()
+    cart = Cart(request)
 
     if form.is_valid():
         sido_name = form.cleaned_data['sido']
@@ -38,6 +40,12 @@ def list_storeRentalProduct(request):
 
             #인벤토리 검색
             inventory = Rentalinventory.objects.filter(store__in=store)
+
+            for item in inventory:
+                #상점의 상품 수량
+                quantity = RentalProduct.objects.get(rentalproduct=item).stock
+                cart_product_form = AddCartForm(initial={'quantity':  quantity })
+
         except ObjectDoesNotExist:
             inventory = None
 
@@ -48,12 +56,10 @@ def list_storeRentalProduct(request):
 #상품을 자세히 보여준다.
 #인벤토리 id는 꼭 필요하며,
 def detail_RentalProduct(request, inventory_id):
-    cart_product_form = AddCartForm()
     form = SigunguForm()
     inventory = get_object_or_404(Rentalinventory, pk = inventory_id)
 
-    return render(request, 'rental/detail.html', {'inventory':inventory,
-    'cart_product_form':cart_product_form})
+    return render(request, 'rental/detail.html', {'inventory':inventory})
 
 #예약
 #로그인 필요

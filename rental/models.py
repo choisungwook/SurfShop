@@ -52,6 +52,12 @@ class RentalProduct(models.Model):
     def get_stock(self):
         return self.stock
 
+    def iter_stock(self):
+        dict_stock = []
+        for x in range(1, self.stock + 1):
+            dict_stock.append(x)
+        return dict_stock
+
 #렌탈 인벤토리 모델
 #상점, 상품이랑 연결되어 있음
 #검색때 유용하게 사용됨

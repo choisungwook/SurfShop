@@ -38,10 +38,13 @@
           <td class="col-sm-1 col-md-1 text-center"><strong>{{ item.inventory.rentalproduct.price }}</strong></td>
           <td class="col-sm-1 col-md-1 text-center">
             <form action="{% url 'cart:add' item.inventory.id  %}" method="post">
+              <div class="input-group">
               {{ item.update_quantity_form.quantity }}
+              </div>
               {% csrf_token %}
               <input type="submit" value="수정" class="btn btn-secondary btn-smt">
             </form>
+            해당 상품 재고 : {{ item.inventory.rentalproduct.stock }}
           </td>
           <td class="col-sm-1 col-md-1 text-center"><strong>{{ item.total_price }}</strong></td>
           <td class="col-sm-1 col-md-1">

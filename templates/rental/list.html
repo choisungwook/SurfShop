@@ -32,11 +32,18 @@
       			<p>{{ product.rentalproduct.description }}</p>
       			<div class="row">
       				<div class="col-md-6">
-      					<!-- <a class="btn btn-primary btn-product"><span class="glyphicon glyphicon-thumbs-up"></span>장바구니</a> -->
                 <form action="{% url 'cart:add' product.id %}" method="post">
-                  {{ cart_product_form.as_p }}
                   {% csrf_token %}
-                  <input type="submit" value="장바구니"  class="btn btn-success btn-product">
+                  {% if product.rentalproduct.stock is not 0 %}
+                    <select id="id_quantity" name="quantity" required>
+                      {% for x in product.rentalproduct.iter_stock %}
+                      <option value="{{ x }}">{{ x }}</option>
+                      {% endfor %}
+                    </select>
+                    <input type="submit" value="장바구니"  class="btn btn-success btn-product">
+                  {% else %}
+                    품절
+                  {% endif %}
                 </form>
       				</div>
       			</div>

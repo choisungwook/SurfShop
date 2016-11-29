@@ -35,9 +35,17 @@
 				<p class="product-description">{{ inventory.rentalproduct.name }}</p>
 				<h4 class="price">가격 : <span>{{ inventory.rentalproduct.price }}원</span></h4>
         <form action="{% url 'cart:add' inventory.id %}" method="post">
-          {{ cart_product_form.as_p }}
-          {% csrf_token %}
-          <input type="submit" value="장바구니"  class="btn btn-success btn-product">
+					{% csrf_token %}
+					{% if inventory.rentalproduct.stock is not 0 %}
+						<select id="id_quantity" name="quantity" required>
+							{% for x in inventory.rentalproduct.iter_stock %}
+							<option value="{{ x }}">{{ x }}</option>
+							{% endfor %}
+						</select>
+						<input type="submit" value="장바구니"  class="btn btn-success btn-product">
+					{% else %}
+						품절
+					{% endif %}
         </form>
 			</div>
 		</div>
