@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'shop',
     'django_extensions',
     'sorl.thumbnail',
+    'lecture',
 ]
 
 MIDDLEWARE = [
