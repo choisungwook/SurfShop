@@ -99,6 +99,7 @@ def cancel_reservation(request, reservation_id):
     rentalproduct.stock += delete_reservation.stock
     rentalproduct.save()
     # #예약삭제
-    delete_reservation.delete()
-    # #예약페이지로이동
+    #delete_reservation.delete()
+    #예약페이지로이동
+    #템플렛에서 next, 다음 이동할 페이지를 명시해주기 때문에 return이 불필요
     return redirect(reverse('account:mypage'))

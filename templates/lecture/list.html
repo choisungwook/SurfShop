@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load embed_video_tags %}
+
+{% block content %}
+<div class="col-md-3">
+    <p class="lead">주제</p>
+    <div class="list-group">
+      {% for subject in subjects %}
+        <a href="{% url 'lecture:list' subject.id %}" class="list-group-item">{{ subject }}</a>
+      {% endfor %}
+    </div>
+</div>
+
+<div class="col-md-7">
+  {% for post in posts %}
+  <div class="thumbnail">
+      {% video post.video as my_video %}
+      {% video my_video "medium" %}
+      {% endvideo %}
+      <div class="caption-full">
+          <h4><a href="#">{{ post.title }}</a>
+          </h4>
+          {{ post.body|linebreaks }}
+      </div>
+  </div>
+  {% endfor %}
+  {% include "lecture/pagination.html" with page=posts %}
+</div>
+
+<!-- {% if is_paginated %}
+        <div class="pagination">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="/cars?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+                <span class="page-current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="/cars?page={{ page_obj.next_page_number }}">next</a>
+                {% endif %}
+            </span>
+        </div>
+    {% endif %} -->
+
+{% endblock %}

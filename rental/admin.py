@@ -24,5 +24,5 @@ class ReservationAdmin(admin.ModelAdmin):
     list_display = ['customer', 'inventory', 'in_date', 'out_date',
                     'status', 'stock']
     list_editable = ['status', 'stock']
-    list_filter = ['customer']
+    list_filter = ['customer', 'status']
 admin.site.register(Reservation, ReservationAdmin)

@@ -17,8 +17,12 @@ def pre_save_Reservation(sender, **kwargs):
         title = "예약확인 확인되었습니다"
         body = "예약확인 확인되었습니다"
         to = user.email
-
+        #상태가 확인되면 메일을 보낸다.
         if obj.status is 0 and instance.status is 1:
             send_mail(title, body, 'csw19591@gmail.com', ['보낼메일'], fail_silently=False)
+        #상태가 취소되면 메일을 보낸다.
+        elif obj.status is 0 and instance.status is 2:
+            send_mail(title, body, 'csw19591@gmail.com', ['보낼메일'], fail_silently=False)
+            
     except sender.DoesNotExist: #발견이 안되면 새로 만드는 경우이다.
         pass

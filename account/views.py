@@ -53,13 +53,13 @@ def register(request):
             new_user.set_password(user_form.cleaned_data['password'])
             new_user.save()
             #생성한 유저를 고객에 연결
-
             Customer.objects.create(user=new_user, image=customer_form.cleaned_data['image'])
-            return HttpResponse('회원가입에 성공하셨습니다')
+            #메인페이지로 리다이렉트
+            return redirect('/')
         else:
             messages.error(request, '정보가 올바르지 않습니다. 다시 입력해주세요')
             return redirect(reverse('account:register'))
-            
+
     else:
         user_form = UserRegistrationForm()
         customer_form = CustomerRegistrationForm()
