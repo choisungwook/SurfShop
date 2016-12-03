@@ -8,6 +8,9 @@ from django.utils import timezone
 from django.utils.text import slugify
 import utility
 import itertools
+import random
+import os
+NAME_FILE = os.path.join(os.path.dirname(__file__), 'name.lst')
 
 #고객 생성
 #장고에서 지원하는 유저 모델을 외래키로 1:1 연결(상속 개념)해서 새로운 유저 모델을 만든다
@@ -23,8 +26,14 @@ def test_model_create_Customer():
 
 #유저 생성
 def test_model_create_User():
-    username = utility.RandGenerator_String()
-    email = username + "@aaa.com"
+    names = []
+    #이름 가져오기
+    Fnames = open(NAME_FILE, 'r')
+    for name in Fnames:
+        names.append(name)
+
+    username = random.choice(names)
+    email = utility.RandGenerator_String() + "@aaa.com"
     password = 'abcdef'
 
     return User.objects.create_user(username=username, email=email, password=password)
@@ -35,7 +44,7 @@ def test_models_create_Address():
     sigungu = utility.getRandSigungu()
     #주소를 가져오고 나머지 지정
     phone = utility.RandGenerator_phone()
-    other_address = '미정'
+    other_address = utility.RandGenerator_String()
 
     return Address.objects.create(Sigungu=sigungu, other_address=other_address, phone=phone)
 
@@ -99,9 +108,13 @@ def test_models_create_Reservation():
 
 def run():
     # #고객 생성
-    # print 'create Customer'
-    # for x in range(100):
-    #     test_model_create_Customer()
+    print '[INFO] start create Customer'
+    try:
+        for x in range(100):
+            test_model_create_Customer()
+    except:
+        pass
+    print '[INFO] finish create Customer'
     #
     # # 상점 생성
     # print 'create Store'
@@ -123,14 +136,6 @@ def run():
     # for x in range(100):
     #     test_models_create_RentalInventory()
 
-    print '예약 생성'
-    for x in range(100):
-        test_models_create_Reservation()
-
-
-
-
-
-
-
-
+    # print '예약 생성'
+    # for x in range(100):
+    #     test_models_create_Reservation()

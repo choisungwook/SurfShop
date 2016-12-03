@@ -10,8 +10,8 @@ urlpatterns = [
     url(r'^address/', include('address.urls', namespace='address')),
     url(r'^cart/', include('Cart.urls', namespace='cart')),
     url(r'^account/', include('account.urls', namespace='account')),
-    url(r'^markdownx/', include('markdownx.urls')),
     url(r'^lecture/', include('lecture.urls', namespace='lecture')),
+    url(r'^test/', include('shop.urls', namespace='shop')),
 ]
 
 #if django is develop mode ...

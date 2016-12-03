@@ -10,6 +10,9 @@ from .models import Customer
 from django.core.mail import send_mail
 from django.contrib import messages
 
+def indexView(request):
+    return render(request, 'account/index.html')
+
 #로그인
 def loginView(request):
     if request.method == "GET":

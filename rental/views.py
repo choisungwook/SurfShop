@@ -14,6 +14,11 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from account.models import Customer
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.paginator import Paginator
+from django.core.paginator import Paginator
+from django.core.paginator import EmptyPage
+from django.core.paginator import PageNotAnInteger
+from django.views import generic
 
 #렌탈 검색
 def searchRentalProduct(request):
@@ -40,6 +45,16 @@ def list_storeRentalProduct(request):
 
             #인벤토리 검색
             inventory = Rentalinventory.objects.filter(store__in=store)
+            # paginator = Paginator(inventory, 1)
+            # page = request.GET.get('page')
+            #
+            # print page
+            # try:
+            #     inventory = paginator.page(page)
+            # except PageNotAnInteger:
+            #     inventory = paginator.page(1)
+            # except EmptyPage:
+            #     inventory = paginator.page(paginator.num_pages)
 
             for item in inventory:
                 #상점의 상품 수량
@@ -50,8 +65,7 @@ def list_storeRentalProduct(request):
             inventory = None
 
         return render(request, 'rental/list.html', {'inventory': inventory,
-        'cart_product_form':cart_product_form})
-
+        'cart_product_form':cart_product_form, 'address':address})
 
 #상품을 자세히 보여준다.
 #인벤토리 id는 꼭 필요하며,

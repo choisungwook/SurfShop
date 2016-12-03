@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'sorl.thumbnail',
     'lecture',
     'embed_video',
+    'mathfilters'
 ]
 
 MIDDLEWARE = [

@@ -31,3 +31,6 @@ class Address(models.Model):
 
     def __unicode__(self):
         return self.Sigungu.sido.name + ' ' + self.Sigungu.name
+
+    def get_name(self):
+        return self.Sigungu.sido.name + ' ' + self.Sigungu.name
