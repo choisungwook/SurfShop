@@ -42,7 +42,6 @@ def list_storeRentalProduct(request):
             sigungu = Sigungu.objects.filter(sido=sido_name, name=sigungu_name)
             address = Address.objects.filter(Sigungu=sigungu)
             store = Store.objects.filter(address__in=address)
-
             #인벤토리 검색
             inventory = Rentalinventory.objects.filter(store__in=store)
             # paginator = Paginator(inventory, 1)
@@ -65,7 +64,7 @@ def list_storeRentalProduct(request):
             inventory = None
 
         return render(request, 'rental/list.html', {'inventory': inventory,
-        'cart_product_form':cart_product_form, 'address':address})
+        'cart_product_form':cart_product_form, 'address':address[0].get_name()})
 
 #상품을 자세히 보여준다.
 #인벤토리 id는 꼭 필요하며,

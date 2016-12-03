@@ -34,7 +34,6 @@ def getCountOfCustomer():
 def getRandCustomer():
     countOfCustomer = getCountOfCustomer()
     customer_id = RandGenerator(countOfCustomer)
-
     return Customer.objects.get(id=customer_id)
 
 ################################# 주소 ######################################
@@ -65,7 +64,7 @@ def getCountOfRentalCategory():
     return RentalCategory.objects.count()
 
 def getRandRentalCategory():
-    countOfCateogyr = getCountOfCustomer()
+    countOfCateogyr = getCountOfRentalCategory()
     Category_id = RandGenerator(countOfCateogyr)
 
     return RentalCategory.objects.get(id=Category_id)
