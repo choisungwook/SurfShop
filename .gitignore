@@ -47,5 +47,6 @@ Temporary Items
 .apdisk
 
 #Django setting Files
-*.pyc
-*.migrations
+__pycache__/
+*.py[cod]
+*$py.class
