@@ -164,42 +164,42 @@ def test_models_create_Reservation():
 
 def run():
     #고객 생성
-    # print '[INFO] start create Customer'
-    # try:
-    #     for x in range(100):
-    #         test_model_create_Customer()
-    # except:
-    #     print '[ERROR] ERROR create Customer'
-    # print '[INFO] finish create Customer'
+    print '[INFO] start create Customer'
+    try:
+        for x in range(100):
+            test_model_create_Customer()
+    except:
+        print '[ERROR] ERROR create Customer'
+    print '[INFO] finish create Customer'
 
     #렌탈 카테고리 생성
-    # print '[INFO] start create category'
-    # try:
-    #     test_models_create_RentalCategory()
-    # except:
-    #     print '[Error] Error create category'
-    # print '[INFO] Finish create category'
+    print '[INFO] start create category'
+    try:
+        test_models_create_RentalCategory()
+    except:
+        print '[Error] Error create category'
+    print '[INFO] Finish create category'
 
     # # #렌탈 상품 생성
-    # print '[INFO] START create Rental Product'
-    # test_models_create_RentalProduct()
-    # print '[INFO] FINISH create Rental Product'
+    print '[INFO] START create Rental Product'
+    test_models_create_RentalProduct()
+    print '[INFO] FINISH create Rental Product'
 
     # # 상점 생성
-    # print '[INFO] START create STORE'
-    # for x in range(100):
-    #     test_models_create_Store()
-    # print '[INFO] FINISH create STORE'
+    print '[INFO] START create STORE'
+    for x in range(100):
+        test_models_create_Store()
+    print '[INFO] FINISH create STORE'
 
     #렌탈 인벤토리 생성
-    # print '[INFO] START create INVENTORY'
-    # for x in range(100):
-    #     test_models_create_RentalInventory()
-    # print '[INFO] FINISH create INVENTORY'
-
-    print '[INFO] START create RESERVATIOn'
+    print '[INFO] START create INVENTORY'
     for x in range(100):
-        test_models_create_Reservation()
-    print '[INFO] FINISH create RESERVATIOn'
+        test_models_create_RentalInventory()
+    print '[INFO] FINISH create INVENTORY'
+
+    #print '[INFO] START create RESERVATIOn'
+    #for x in range(100):
+    #    test_models_create_Reservation()
+    #print '[INFO] FINISH create RESERVATIOn'
 
     print 'ALL TEST Finished'
