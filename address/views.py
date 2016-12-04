@@ -2,6 +2,7 @@
 from .models import Sido, Sigungu, Address
 from django.http import JsonResponse
 from shop.models import Store
+from rental.models import Rentalinventory
 import json
 
 #JSON
@@ -11,10 +12,12 @@ def searchSigungu(request):
     sido = request.GET.get('sido_id')
 
     #중복된 상점 주소 제거
-    distinct_store = Store.objects.values_list('address').distinct()
-    distinct_address =  Address.objects.filter(id__in=distinct_store).values_list('Sigungu').distinct()
-    #해당 시에서 존재하는 시,군,구만 검색
-    distinct_sigungu = Sigungu.objects.filter(id__in=distinct_address, sido_id=sido)
+    rental = Rentalinventory.objects.all().values_list('store')
+    store = Store.objects.filter(id__in=rental).values_list('address')
+    address = Address.objects.filter(id__in=store).values_list('Sigungu')
+    distinct_sigungu = Sigungu.objects.filter(id__in=address, sido=sido).distinct()
+
+    print distinct_sigungu
 
     # sigungus = Sigungu.objects.filter(sido=sido)
     json_res = []
