@@ -1,18 +1,31 @@
 <VirtualHost *:80>
+        ServerAdmin webmaster@localhost
+        #DocumentRoot /var/www/html
+
         ErrorLog ${APACHE_LOG_DIR}/error.log
         CustomLog ${APACHE_LOG_DIR}/access.log combined
 
-        WSGIDaemonProcess surf python-path=/home/choi/Documents/SurfShop:/home/choi/Documents/surf_env/lib/python2.7/site-packages
-        WSGIProcessGroup surf
-        WSGIScriptAlias / /home/choi/Documents/SurfShop/SurfShop/wsgi.py
-
         Alias /assests /var/www/html/assests
+        Alias /media /home/choi/Documents/SurfShop/uploads
+
         <Directory /var/www/html/assests>
                 Require all granted
         </Directory>
+
+        <Directory /home/choi/Documents/SurfShop/uploads>
+                Options Indexes
+                Require all granted
+                AllowOverride  all
+        </Directory>
+
         <Directory /home/choi/Documents/SurfShop/SurfShop>
                 <Files wsgi.py>
-                        Require all granted
+                    Require all granted
                 </Files>
         </Directory>
+
+        WSGIDaemonProcess surf python-home=/home/choi/Documents/surf_env python-path=/home/choi/Documents/SurfShop
+        WSGIProcessGroup surf
+        WSGIScriptAlias / /home/choi/Documents/SurfShop/SurfShop/wsgi.py
+
 </VirtualHost>
