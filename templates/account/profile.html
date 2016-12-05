@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% load thumbnail %}
+{% block content %}
+<!-- 사이드 메뉴 -->
+{% include 'account/mypage_base.html' %}
+<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 toppad" >
+  <div class="panel panel-info">
+    <div class="panel-heading">
+      <h3 class="panel-title"></h3>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class=" col-md-9 col-lg-9 ">
+          <form action="{% url 'account:profile' %}" method="post" enctype="multipart/form-data">
+            {{userform.as_p}}
+            {{profileform.as_p}}
+          {% csrf_token %}
+          <p><input type="submit" value="상태변경"></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
