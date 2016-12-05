@@ -25,7 +25,7 @@
         		<div class="caption">
         				<h5>상품이름:{{ product.rentalproduct.name }}</h5>
                 <label>가격:{{ product.rentalproduct.price }}원</label>
-                </h5>위치:{{ product.store.address }}</h5>
+                </h5>위치:{{ product.store.address }} {{ product.store.address.other_address }}</h5>
         			<p>상품설명:</br>
               {{ product.rentalproduct.description }}
         			<div class="row">
