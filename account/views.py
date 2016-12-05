@@ -1,7 +1,7 @@
 #-*- encoding: utf-8 -*-
 from django.shortcuts import render, HttpResponseRedirect, HttpResponse, reverse, render, redirect
 from django.contrib.auth import authenticate, login, logout
-from .forms import LoginForm, UserRegistrationForm, CustomerRegistrationForm
+from .forms import LoginForm, UserRegistrationForm, CustomerRegistrationForm, UserEditForm, ProfileEditForm
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from rental.models import Reservation
@@ -79,3 +79,28 @@ def mypage(request):
     reservation = Reservation.objects.filter(customer=customer)
 
     return render(request, 'account/mypage.html', {'items': reservation})
+
+@login_required(login_url='/accounts/login/')
+def profile(request):
+    user = User.objects.get(username=request.user)
+    customer = Customer.objects.get(user=user)
+
+    # 폼을 리턴
+    if request.method == "GET":
+        userform = UserEditForm(instance=user)
+        profileform = ProfileEditForm(instance=customer)
+
+        return render(request, 'account/profile.html', {'userform': userform, 'profileform': profileform})
+
+    elif request.method == "POST":
+        userform = UserEditForm(instance=user, data=request.POST)
+        profileform = ProfileEditForm(instance=customer, data=request.POST, files=request.FILES)
+
+        if userform.is_valid() and profileform.is_valid():
+            userform.save()
+            profileform.save()
+
+        userform = UserEditForm(instance=user)
+        profileform = ProfileEditForm(instance=customer)
+
+        return render(request, 'account/profile.html', {'userform': userform, 'profileform': profileform})
